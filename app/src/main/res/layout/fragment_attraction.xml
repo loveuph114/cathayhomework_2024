@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="?colorOnSurface"
+            app:title="龍山文創基地"
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollerContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/imagePager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="?colorTertiary"
+                app:layout_constraintDimensionRatio="3:2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:alpha="0.5"
+                android:background="?android:colorBackground"
+                app:layout_constraintBottom_toBottomOf="@+id/tabIndicatorTextView"
+                app:layout_constraintTop_toTopOf="@+id/tabIndicatorTextView"
+                tools:text="1/2" />
+
+            <TextView
+                android:id="@+id/tabIndicatorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="4dp"
+                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/imagePager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="1/2" />
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="龍山文創基地"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagePager" />
+
+            <ImageView
+                android:id="@+id/locationIcon"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/addressTextView"
+                app:tint="?android:textColorPrimary" />
+
+            <TextView
+                android:id="@+id/addressTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="4dp"
+                android:text="台北市萬華區西園路一段145號B2 龍山寺地下街"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/locationIcon"
+                app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+
+            <ImageView
+                android:id="@+id/dateIcon"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/openTimeTextView"
+                app:tint="?android:textColorPrimary" />
+
+            <TextView
+                android:id="@+id/openTimeTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="4dp"
+                android:text="營業時間"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/dateIcon"
+                app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
+
+
+            <ImageView
+                android:id="@+id/phoneIcon"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_phone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tel_text_view"
+                app:tint="?android:textColorPrimary" />
+
+            <TextView
+                android:id="@+id/tel_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="4dp"
+                android:text="聯絡電話：0987654321"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/phoneIcon"
+                app:layout_constraintTop_toBottomOf="@+id/openTimeTextView" />
+
+
+            <TextView
+                android:id="@+id/categoryTimeTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="藝文所館 · 藝文所館 · 藝文所館 · 藝文所館"
+                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                android:textColor="?colorOnSurface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tel_text_view" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/basicInfoDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/categoryTimeTextView" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/urlButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="4dp"
+                android:text="網址"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintEnd_toStartOf="@+id/websiteButton"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/basicInfoDivider" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/websiteButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="16dp"
+                android:text="官網"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintEnd_toStartOf="@+id/facebookButton"
+                app:layout_constraintStart_toEndOf="@+id/urlButton"
+                app:layout_constraintTop_toBottomOf="@+id/basicInfoDivider" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/facebookButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="臉書"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/websiteButton"
+                app:layout_constraintTop_toBottomOf="@+id/basicInfoDivider" />
+
+            <TextView
+                android:id="@+id/descTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="體驗式學習行文創基地\r\n\r\n萬華本身具豐富內涵與文化，無論是文字、視覺、聲音、表演、工藝甚至氣味與食物等，在在散發獨特的風貌，龍山文創基地以「培養在地設計師、藝術家、創作者」為主軸，發展在地品牌，以導覽、藝文表演、互動工作坊等讓民眾參與及體驗，讓旅客於此體驗，發掘萬華的文化與文創能量。\r\n\r\n從B2認識艋舺美與善\r\n\r\n重新塑造目前龍山文創基地給人的既定形象，從文創品、飲食、街景與服務皆彰顯萬華在地美與善的形象與特色，並將過去常民生活展示於此，讓到萬華的旅客以此為出發點，進而認識艋舺。驗式學習行文創基地\r\n\r\n萬華本身具豐富內涵與文化，無論是文字、視覺、聲音、表演、工藝甚至氣味與食物等，在在散發獨特的風貌，龍山文創基地以「培養在地設計師、藝術家、創作者」為主軸，發展在地品牌，以導覽、藝文表演、互動工作坊等讓民眾參與及體驗，讓旅客於此體驗，發掘萬華的文化與文創能量。\r\n\r\n從B2認識艋舺美與善\r\n\r\n重新塑造目前龍山文創基地給人的既定形象，從文創品、飲食、街景與服務皆彰顯萬華在地美與善的形象與特色，並將過去常民生活展示於此，讓到萬華的旅客以此為出發點，進而認識艋舺。驗式學習行文創基地\r\n\r\n萬華本身具豐富內涵與文化，無論是文字、視覺、聲音、表演、工藝甚至氣味與食物等，在在散發獨特的風貌，龍山文創基地以「培養在地設計師、藝術家、創作者」為主軸，發展在地品牌，以導覽、藝文表演、互動工作坊等讓民眾參與及體驗，讓旅客於此體驗，發掘萬華的文化與文創能量。\r\n\r\n從B2認識艋舺美與善\r\n\r\n重新塑造目前龍山文創基地給人的既定形象，從文創品、飲食、街景與服務皆彰顯萬華在地美與善的形象與特色，並將過去常民生活展示於此，讓到萬華的旅客以此為出發點，進而認識艋舺。"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/urlButton" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descTextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

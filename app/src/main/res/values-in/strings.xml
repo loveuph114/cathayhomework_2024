@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jelajahi Taipei</string>
+    <string name="news_title">Berita Terbaru</string>
+    <string name="attractions_title">Tempat Wisata</string>
+    <string name="show_all">Tampilkan semua</string>
+    <string name="choose_language">Pilih Bahasa</string>
+</resources>

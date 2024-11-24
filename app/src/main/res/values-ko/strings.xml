@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">타이페이 여행</string>
+    <string name="news_title">최신 소식</string>
+    <string name="attractions_title">관광지</string>
+    <string name="show_all">모두 보기</string>
+    <string name="choose_language">언어 선택</string>
+</resources>

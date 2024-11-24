@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="olive_green">#FF47663B</color>
+    <color name="milk_tea_brown">#FFEED3B1</color>
+    <color name="light_primary_container">#FFB8F8C4</color>
+    <color name="light_on_primary_container">#FF00210E</color>
+    <color name="light_secondary_container">#FFCBECB9</color>
+    <color name="light_on_secondary_container">#FF121F0F</color>
+    <color name="light_tertiary_container">#FFDCC3</color>
+    <color name="light_on_tertiary_container">#FF2B1600</color>
+    <color name="light_surface">#FFF5F5F2</color>
+    <color name="light_on_surface">#FF1A1C18</color>
+    <color name="light_outline">#FF74796D</color>
+    <color name="light_background">#FFF5F5F2</color>
+
+    <color name="dark_olive_green">#FF588D4E</color>
+    <color name="dark_milk_tea_brown">#FF8B6744</color>
+    <color name="dark_primary_container">#FF234F2C</color>
+    <color name="dark_on_primary_container">#FFB8F8C4</color>
+    <color name="dark_secondary_container">#FF3B5229</color>
+    <color name="dark_on_secondary_container">#FFCBECB9</color>
+    <color name="dark_tertiary_container">#FF5C3A22</color>
+    <color name="dark_on_tertiary_container">#FFDCC3</color>
+    <color name="dark_surface">#FF242424</color>
+    <color name="dark_on_surface">#FFE2E3DD</color>
+    <color name="dark_outline">#FF8E9286</color>
+    <color name="dark_background">#FF242424</color>
+</resources>

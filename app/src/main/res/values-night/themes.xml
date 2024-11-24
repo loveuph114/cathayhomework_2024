@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CathayTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/dark_olive_green</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorPrimaryContainer">@color/dark_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/dark_on_primary_container</item>
+        <item name="colorSecondary">@color/dark_olive_green</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="colorSecondaryContainer">@color/dark_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/dark_on_secondary_container</item>
+        <item name="colorTertiary">@color/dark_milk_tea_brown</item>
+        <item name="colorOnTertiary">@android:color/white</item>
+        <item name="colorTertiaryContainer">@color/dark_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/dark_on_tertiary_container</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="colorOnBackground">@android:color/white</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorOnSurface">@color/dark_on_surface</item>
+        <item name="colorOutline">@color/dark_outline</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">เที่ยวไทเป</string>
+    <string name="news_title">ข่าวล่าสุด</string>
+    <string name="attractions_title">สถานที่ท่องเที่ยว</string>
+    <string name="show_all">แสดงทั้งหมด</string>
+    <string name="choose_language">เลือกภาษา</string>
+</resources>
