@@ -16,11 +16,12 @@ import androidx.compose.ui.unit.LayoutDirection
 
 @Composable
 fun CathayScaffold(
+    modifier: Modifier = Modifier,
     topAppBar: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
-
     Scaffold(
+        modifier = modifier,
         topBar = topAppBar
     ) {
         Box(

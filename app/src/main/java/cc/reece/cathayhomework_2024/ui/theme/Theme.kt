@@ -1,41 +1,56 @@
 package cc.reece.cathayhomework_2024.ui.theme
 
 import android.app.Activity
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = lightColorScheme(
-    primary = DarkGreen,
-    secondary = DarkYellow,
-    tertiary = DarkBlue,
-    background = Dark,
-    surface = Dark,
-    primaryContainer = Dark,
-    onPrimary = Light,
-    onSecondary = Light,
-    onTertiary = Light,
-    onBackground = Light,
-    onSurface = Light,
+private val DarkColorScheme = darkColorScheme(
+    primary = DarkDeepForestGreen,
+    onPrimary = Color.White,
+    primaryContainer = DarkPrimaryContainer,
+    onPrimaryContainer = DarkOnPrimaryContainer,
+    secondary = DarkOliveGreen,
+    onSecondary = Color.White,
+    secondaryContainer = DarkSecondaryContainer,
+    onSecondaryContainer = DarkOnSecondaryContainer,
+    tertiary = DarkMilkTeaBrown,
+    onTertiary = Color.White,
+    tertiaryContainer = DarkTertiaryContainer,
+    onTertiaryContainer = DarkOnTertiaryContainer,
+    background = DarkSurface,
+    onBackground = Color.White,
+    surface = DarkSurface,
+    onSurface = DarkOnSurface,
+    outline = DarkOutline
 )
 
-private val LightColorScheme = darkColorScheme(
-    primary = Green,
-    secondary = Yellow,
-    tertiary = Blue,
-    background = Light,
-    surface = Light,
-    primaryContainer = Light,
-    onPrimary = Dark,
-    onSecondary = Dark,
-    onTertiary = Dark,
-    onBackground = Dark,
-    onSurface = Dark,
+private val LightColorScheme = lightColorScheme(
+    primary = OliveGreen,
+    onPrimary = Color.White,
+    primaryContainer = LightPrimaryContainer,
+    onPrimaryContainer = LightOnPrimaryContainer,
+    secondary = OliveGreen,
+    onSecondary = Color.White,
+    secondaryContainer = LightSecondaryContainer,
+    onSecondaryContainer = LightOnSecondaryContainer,
+    tertiary = MilkTeaBrown,
+    onTertiary = Color.Black,
+    tertiaryContainer = LightTertiaryContainer,
+    onTertiaryContainer = LightOnTertiaryContainer,
+    background = LightSurface,
+    onBackground = Color.Black,
+    surface = LightSurface,
+    onSurface = LightOnSurface,
+    outline = LightOutline
 )
 
 @Composable
@@ -49,6 +64,7 @@ fun CathayTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
+
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
