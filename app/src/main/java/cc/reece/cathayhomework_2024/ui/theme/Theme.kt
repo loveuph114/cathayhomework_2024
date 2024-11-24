@@ -1,15 +1,12 @@
 package cc.reece.cathayhomework_2024.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
@@ -19,6 +16,7 @@ private val DarkColorScheme = lightColorScheme(
     tertiary = DarkBlue,
     background = Dark,
     surface = Dark,
+    primaryContainer = Dark,
     onPrimary = Light,
     onSecondary = Light,
     onTertiary = Light,
@@ -32,6 +30,7 @@ private val LightColorScheme = darkColorScheme(
     tertiary = Blue,
     background = Light,
     surface = Light,
+    primaryContainer = Light,
     onPrimary = Dark,
     onSecondary = Dark,
     onTertiary = Dark,
@@ -50,12 +49,6 @@ fun CathayTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                window.isNavigationBarContrastEnforced = false
-            } else {
-                window.statusBarColor = Color.Transparent.toArgb()
-            }
-
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
