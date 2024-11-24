@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">旅游台北</string>
+    <string name="news_title">最新消息</string>
+    <string name="attractions_title">景点</string>
+    <string name="show_all">显示全部</string>
+    <string name="choose_language">选择语言</string>
+</resources>

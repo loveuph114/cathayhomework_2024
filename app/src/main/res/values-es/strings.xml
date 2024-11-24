@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Viajar a Taipéi</string>
+    <string name="news_title">Últimas Noticias</string>
+    <string name="attractions_title">Atracciones</string>
+    <string name="show_all">Mostrar todo</string>
+    <string name="choose_language">Elegir idioma</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">台北を旅する</string>
+    <string name="news_title">最新ニュース</string>
+    <string name="attractions_title">観光スポット</string>
+    <string name="show_all">すべて表示</string>
+    <string name="choose_language">言語を選択</string>
+</resources>

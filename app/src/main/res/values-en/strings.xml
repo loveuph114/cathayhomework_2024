@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Travel Taipei</string>
+    <string name="news_title">News</string>
+    <string name="attractions_title">Attractions</string>
+    <string name="show_all">Show all</string>
+    <string name="choose_language">Choose Language</string>
+</resources>

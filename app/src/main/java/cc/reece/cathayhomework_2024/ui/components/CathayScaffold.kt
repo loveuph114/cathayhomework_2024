@@ -1,52 +1,42 @@
 package cc.reece.cathayhomework_2024.ui.components
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.LayoutDirection
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CathayScaffold(
-    title: String,
     modifier: Modifier = Modifier,
-    content: @Composable (PaddingValues) -> Unit
+    topAppBar: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
-    val displayCutoutInsets = WindowInsets.displayCutout
-
     Scaffold(
         modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = { Text(text = title) },
-                modifier = Modifier.windowInsetsPadding(
-                    displayCutoutInsets.only(WindowInsetsSides.Horizontal)
-                )
-            )
-        }
-    ) { scaffoldPadding ->
+        topBar = topAppBar
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(scaffoldPadding)
+                .padding(
+                    top = it.calculateTopPadding(),
+                    end = it.calculateEndPadding(LayoutDirection.Ltr)
+                )
                 .windowInsetsPadding(
-                    displayCutoutInsets.only(WindowInsetsSides.Horizontal)
+                    WindowInsets.displayCutout.only(WindowInsetsSides.Horizontal)
                 )
         ) {
-            content(scaffoldPadding)
+            content()
         }
     }
+
 }
