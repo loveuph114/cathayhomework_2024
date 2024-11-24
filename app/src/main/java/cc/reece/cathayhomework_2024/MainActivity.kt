@@ -17,13 +17,13 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -108,29 +109,46 @@ fun MainContent() {
             Section("最新消息")
         }
         itemsIndexed(news) { index, item ->
-            NewsItem()
-            HorizontalDivider(
-                color = MaterialTheme.colorScheme.primary.withAlpha(alpha = 0.2f)
+            NewsItem(
+                isFirst = index == 0,
+                isLast = false
+//                isLast = index == news.size - 1
             )
+            if (index < news.size) {
+                Spacer(modifier = Modifier.height(1.dp))
+            }
         }
         item {
-            TextButton(
-                onClick = {},
-                modifier = Modifier.padding(start = 4.dp)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .clip(
+                        RoundedCornerShape(
+                            bottomStart = 12.dp,
+                            bottomEnd = 12.dp
+                        )
+                    )
+                    .background(MaterialTheme.colorScheme.surface)
+                    .clickable { }
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "顯示全部",
-                    style = MaterialTheme.typography.labelMedium
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
-            Spacer(modifier = Modifier.padding(12.dp))
+        }
+        item {
+            Spacer(modifier = Modifier.height(32.dp))
         }
         stickyHeader {
             Section("景點")
         }
         itemsIndexed(items) { index, item ->
             AttractionsItem()
-
         }
     }
 }
@@ -148,31 +166,42 @@ fun Section(
             )
             .padding(vertical = 8.dp, horizontal = 16.dp),
         color = MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.labelLarge
+        style = MaterialTheme.typography.titleMedium
     )
-    HorizontalDivider(
-        thickness = 3.dp,
-        color = MaterialTheme.colorScheme.primary
-    )
+    Spacer(modifier = Modifier.height(8.dp))
 }
 
 @Composable
-fun NewsItem() {
+fun NewsItem(
+    isFirst: Boolean = false,
+    isLast: Boolean = false
+) {
+    val shape = when {
+        isFirst -> RoundedCornerShape(
+            topStart = 12.dp,
+            topEnd = 12.dp
+        )
+
+        isLast -> RoundedCornerShape(
+            bottomStart = 12.dp,
+            bottomEnd = 12.dp
+        )
+
+        else -> RectangleShape
+    }
+
     Column(
         modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .clip(shape)
+            .background(MaterialTheme.colorScheme.surface)
             .clickable { }
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         Text(
             text = "臺北旅遊網Open API正式上線！讓旅遊網豐富的資料 產生全新的加值應用",
             style = MaterialTheme.typography.titleMedium,
-        )
-        Text(
-            text = "為提升臺北旅遊網的能見度以及達到政府開放資料目的，臺北市觀光傳播局於今（8）日啟動臺北旅遊網Open API（開放應用程式介面）功能，提供業者、民間社群以系統介接方式取得臺北旅遊網公開資料進行加值應用。",
-            modifier = Modifier.padding(top = 4.dp),
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
-            style = MaterialTheme.typography.bodyMedium,
         )
         Text(
             text = "2020-10-26",
@@ -187,8 +216,8 @@ fun AttractionsItem() {
     Box(
         modifier = Modifier
             .aspectRatio(3f / 2f)
-            .padding(horizontal = 16.dp, vertical = 16.dp)
-            .clip(RoundedCornerShape(20.dp))
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .clip(RoundedCornerShape(12.dp))
             .background(
                 MaterialTheme.colorScheme.tertiary
             ),
@@ -198,7 +227,7 @@ fun AttractionsItem() {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = MaterialTheme.colorScheme.primary.withAlpha(0.5f)
+                    color = MaterialTheme.colorScheme.surface.withAlpha(0.5f)
                 )
                 .padding(16.dp),
             verticalArrangement = Arrangement.Bottom,
@@ -206,13 +235,13 @@ fun AttractionsItem() {
             Text(
                 text = "龍山文創基地",
                 modifier = Modifier.padding(top = 4.dp),
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.titleMedium,
             )
             Text(
                 text = "108 臺北市萬華區西園路一段145號B2 龍山寺地下街B2(龍山寺捷運站1號出口)",
                 modifier = Modifier.padding(top = 4.dp),
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 style = MaterialTheme.typography.bodyMedium,
@@ -220,7 +249,7 @@ fun AttractionsItem() {
             Text(
                 text = "藝文館所 · 歷史建築無 · 障礙旅遊推薦景點",
                 modifier = Modifier.padding(top = 4.dp),
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 style = MaterialTheme.typography.labelSmall,
