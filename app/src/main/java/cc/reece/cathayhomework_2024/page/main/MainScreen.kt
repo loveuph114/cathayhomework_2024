@@ -55,20 +55,19 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cc.reece.cathayhomework_2024.R
-import cc.reece.cathayhomework_2024.network.RetrofitClient
-import cc.reece.cathayhomework_2024.network.TravelTaipeiRepository
 import cc.reece.cathayhomework_2024.model.Attraction
 import cc.reece.cathayhomework_2024.model.MainResult
 import cc.reece.cathayhomework_2024.model.News
 import cc.reece.cathayhomework_2024.model.UiState
 import cc.reece.cathayhomework_2024.model.lang.Language
+import cc.reece.cathayhomework_2024.network.RetrofitClient
+import cc.reece.cathayhomework_2024.network.TravelTaipeiRepository
 import cc.reece.cathayhomework_2024.ui.components.CathayScaffold
 import cc.reece.cathayhomework_2024.ui.components.CathayTopAppBar
 import cc.reece.cathayhomework_2024.ui.components.LanguageSelectorBottomSheet
@@ -77,11 +76,12 @@ import cc.reece.cathayhomework_2024.utils.withAlpha
 import coil.compose.AsyncImage
 import java.util.Locale
 
-sealed interface MainScreenUiEvent {
-    data object Refresh : MainScreenUiEvent
-    data object LoadMore : MainScreenUiEvent
-    data object ToggleLanguageSheet : MainScreenUiEvent
-    data class SelectLanguage(val language: Language) : MainScreenUiEvent
+sealed interface MainScreenUiAction {
+    data object Refresh : MainScreenUiAction
+    data object LoadMore : MainScreenUiAction
+    data object ToggleLanguageSheet : MainScreenUiAction
+    data class SelectLanguage(val language: Language) : MainScreenUiAction
+    data class NewsClick(val news: News) : MainScreenUiAction
 }
 
 private class MainViewModelFactory(
@@ -100,7 +100,8 @@ fun MainScreen(
         factory = MainViewModelFactory(
             TravelTaipeiRepository(RetrofitClient.travelTaipeiApiService)
         )
-    )
+    ),
+    onAction: (MainScreenUiAction) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val uiState by viewModel.uiState.collectAsState()
@@ -116,16 +117,18 @@ fun MainScreen(
             uiState = uiState,
             loadMoreState = loadMoreState,
             showBottomSheet = showBottomSheet,
-            onEvent = { event ->
-                when (event) {
-                    MainScreenUiEvent.Refresh -> viewModel.refresh()
-                    MainScreenUiEvent.LoadMore -> viewModel.loadMoreAttractions()
-                    MainScreenUiEvent.ToggleLanguageSheet -> showBottomSheet = !showBottomSheet
-                    is MainScreenUiEvent.SelectLanguage -> {
+            onAction = { action ->
+                when (action) {
+                    MainScreenUiAction.Refresh -> viewModel.refresh()
+                    MainScreenUiAction.LoadMore -> viewModel.loadMoreAttractions()
+                    MainScreenUiAction.ToggleLanguageSheet -> showBottomSheet = !showBottomSheet
+                    is MainScreenUiAction.SelectLanguage -> {
                         showBottomSheet = false
-                        viewModel.updateLanguage(event.language)
+                        viewModel.updateLanguage(action.language)
                         viewModel.refresh()
                     }
+
+                    else -> onAction(action)
                 }
             }
         )
@@ -141,7 +144,7 @@ private fun MainScreenContent(
     uiState: UiState<MainResult>,
     loadMoreState: UiState<Unit>,
     showBottomSheet: Boolean,
-    onEvent: (MainScreenUiEvent) -> Unit
+    onAction: (MainScreenUiAction) -> Unit
 ) {
     CathayScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -149,7 +152,7 @@ private fun MainScreenContent(
             CathayTopAppBar(
                 title = stringResource(id = R.string.app_name),
                 actions = {
-                    LanguageButton(onClick = { onEvent(MainScreenUiEvent.ToggleLanguageSheet) })
+                    LanguageButton(onClick = { onAction(MainScreenUiAction.ToggleLanguageSheet) })
                 },
                 scrollBehavior = scrollBehavior
             )
@@ -158,11 +161,11 @@ private fun MainScreenContent(
         if (showBottomSheet) {
             LanguageSelectorBottomSheet(
                 context = context,
-                onDismissRequest = { onEvent(MainScreenUiEvent.ToggleLanguageSheet) },
+                onDismissRequest = { onAction(MainScreenUiAction.ToggleLanguageSheet) },
                 onLanguageSelected = { language ->
-                    onEvent(MainScreenUiEvent.ToggleLanguageSheet)
-                    onEvent(MainScreenUiEvent.SelectLanguage(language))
-                    onEvent(MainScreenUiEvent.Refresh)
+                    onAction(MainScreenUiAction.ToggleLanguageSheet)
+                    onAction(MainScreenUiAction.SelectLanguage(language))
+                    onAction(MainScreenUiAction.Refresh)
                 }
             )
         }
@@ -170,8 +173,7 @@ private fun MainScreenContent(
         MainContent(
             uiState = uiState,
             loadMoreState = loadMoreState,
-            onRefresh = { onEvent(MainScreenUiEvent.Refresh) },
-            onLoadMore = { onEvent(MainScreenUiEvent.LoadMore) }
+            onAction = onAction
         )
     }
 }
@@ -203,15 +205,14 @@ private fun LanguageButton(
 private fun MainContent(
     uiState: UiState<MainResult>,
     loadMoreState: UiState<Unit>,
-    onRefresh: () -> Unit,
-    onLoadMore: () -> Unit,
+    onAction: (MainScreenUiAction) -> Unit,
 ) {
     val isRefreshing = uiState is UiState.Loading
     val refreshState = rememberPullToRefreshState()
 
     PullToRefreshBox(
         isRefreshing = isRefreshing,
-        onRefresh = onRefresh,
+        onRefresh = { onAction(MainScreenUiAction.Refresh) },
         modifier = Modifier.fillMaxSize(),
         state = refreshState,
         indicator = {
@@ -227,14 +228,14 @@ private fun MainContent(
         when (uiState) {
             is UiState.Error -> ErrorContent(
                 throwable = uiState.throwable,
-                onRetry = { onRefresh() }
+                onRetry = { onAction(MainScreenUiAction.Refresh) }
             )
 
             is UiState.Success -> SuccessContent(
                 news = uiState.result.news.take(3),
                 attractions = uiState.result.attractions,
                 loadMoreState = loadMoreState,
-                onLoadMore = onLoadMore
+                onAction = onAction
             )
 
             UiState.Loading -> {}
@@ -261,7 +262,7 @@ private fun ErrorContent(
             modifier = Modifier
                 .padding(top = 8.dp)
                 .align(Alignment.CenterHorizontally),
-            onClick = { onRetry() }
+            onClick = onRetry
         ) {
             Text("Retry")
         }
@@ -273,7 +274,7 @@ private fun SuccessContent(
     news: List<News>,
     attractions: List<Attraction>,
     loadMoreState: UiState<Unit>,
-    onLoadMore: () -> Unit
+    onAction: (MainScreenUiAction) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -281,27 +282,37 @@ private fun SuccessContent(
             bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding()
         ),
     ) {
-        newsSection(news)
+        newsSection(
+            newsList = news,
+            onClick = { onAction(MainScreenUiAction.NewsClick(it)) }
+        )
         spacerItem(32.dp)
-        attractionsSection(attractions, onLoadMore)
+        attractionsSection(
+            attractions = attractions,
+            onLoadMore = { onAction(MainScreenUiAction.LoadMore) }
+        )
         showLoadMoreIfNeed(loadMoreState)
     }
 }
 
+
 @OptIn(ExperimentalFoundationApi::class)
-private fun LazyListScope.newsSection(news: List<News>) {
+private fun LazyListScope.newsSection(
+    newsList: List<News>,
+    onClick: (News) -> Unit
+) {
     stickyHeader {
         Section(stringResource(id = R.string.news_title))
     }
 
-    if (news.isNotEmpty()) {
-        itemsIndexed(news) { index, item ->
+    if (newsList.isNotEmpty()) {
+        itemsIndexed(newsList) { index, news ->
             NewsItem(
-                title = item.title,
-                posted = item.postedDateOnly.toString(),
-                topRoundedCorner = index == 0
+                news = news,
+                topRoundedCorner = index == 0,
+                onClick = onClick
             )
-            if (index < news.size) {
+            if (index < newsList.size) {
                 Spacer(modifier = Modifier.height(1.dp))
             }
         }
@@ -443,9 +454,9 @@ fun Section(
 
 @Composable
 fun NewsItem(
-    title: String,
-    posted: String,
+    news: News,
     topRoundedCorner: Boolean = false,
+    onClick: (News) -> Unit
 ) {
     val shape = when {
         topRoundedCorner -> RoundedCornerShape(
@@ -462,15 +473,15 @@ fun NewsItem(
             .padding(horizontal = 16.dp)
             .clip(shape)
             .background(MaterialTheme.colorScheme.surface)
-            .clickable { }
+            .clickable { onClick(news) }
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         Text(
-            text = title,
+            text = news.title,
             style = MaterialTheme.typography.titleMedium,
         )
         Text(
-            text = posted,
+            text = news.postedDateOnly.toString(),
             modifier = Modifier.padding(top = 4.dp),
             style = MaterialTheme.typography.bodySmall,
         )
@@ -547,34 +558,4 @@ fun AttractionItem(
             }
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-private fun ErrorContentPreview() {
-    ErrorContent(
-        throwable = RuntimeException("HaHaHa"),
-        onRetry = {}
-    )
-}
-
-@Preview
-@Composable
-private fun NewsViewPreview() {
-    NewsItem(
-        title = "這個是最新消息的標題",
-        posted = "2024-11-25"
-    )
-}
-
-@Preview
-@Composable
-fun AttractionsViewPreview() {
-    AttractionItem(
-        name = "臺北盆地",
-        address = "台灣的北部",
-        category = "",
-        image = "https://www.travel.taipei/image/222315"
-    )
 }

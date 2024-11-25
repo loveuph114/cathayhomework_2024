@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import cc.reece.cathayhomework_2024.page.news.NewsActivity
 
 class MainActivity : ComponentActivity() {
 
@@ -11,7 +12,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreen()
+            MainScreen {
+                when (it) {
+                    is MainScreenUiAction.NewsClick -> {
+                        startActivity(
+                            NewsActivity.createIntent(this, it.news.url)
+                        )
+                    }
+
+                    else -> {}
+                }
+            }
         }
     }
 }
