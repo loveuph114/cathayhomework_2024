@@ -23,8 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".page.news.NewsActivity"/>
-        <activity android:name=".page.attraction.AttractionActivity"/>
+        <activity android:name=".page.news.NewsActivity" />
+        <activity android:name=".page.web.WebViewActivity" />
+        <activity android:name=".page.attraction.AttractionActivity" />
     </application>
 
 </manifest>

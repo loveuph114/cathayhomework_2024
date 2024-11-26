@@ -1,27 +1,33 @@
 package cc.reece.cathayhomework_2024.page.web
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import cc.reece.cathayhomework_2024.R
 import cc.reece.cathayhomework_2024.databinding.FragmentWebviewBinding
 
 class WebViewFragment : Fragment() {
 
     companion object {
         private const val KEY_URL = "KEY_URL"
+        private const val KEY_TITLE = "KEY_TITLE"
 
         fun newInstance(
-            url: String
+            url: String,
+            title: String,
         ) = WebViewFragment().apply {
             arguments = bundleOf(
-                KEY_URL to url
+                KEY_URL to url,
+                KEY_TITLE to title
             )
         }
     }
@@ -30,6 +36,7 @@ class WebViewFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val url get() = requireArguments().getString(KEY_URL)!!
+    private val title get() = requireArguments().getString(KEY_TITLE)!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,13 +61,33 @@ class WebViewFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupViews() {
         binding.toolbar.apply {
-            title = getString(R.string.news_title)
+            title = this@WebViewFragment.title
             setNavigationOnClickListener { handleBackPressed() }
         }
 
         binding.webView.apply {
             settings.javaScriptEnabled = true
-            webViewClient = WebViewClient()
+            webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(
+                    view: WebView?,
+                    request: WebResourceRequest?
+                ): Boolean {
+                    val url = request?.url?.toString() ?: return false
+
+                    return if (url.startsWith("fb://")) {
+                        try {
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                            true
+                        } catch (e: Exception) {
+                            view?.loadUrl(this@WebViewFragment.url)
+                            true
+                        }
+                    } else {
+                        view?.loadUrl(url)
+                        true
+                    }
+                }
+            }
         }.loadUrl(url)
     }
 

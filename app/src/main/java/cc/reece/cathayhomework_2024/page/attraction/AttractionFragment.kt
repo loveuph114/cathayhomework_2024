@@ -1,15 +1,20 @@
 package cc.reece.cathayhomework_2024.page.attraction
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import cc.reece.cathayhomework_2024.databinding.FragmentAttractionBinding
 import cc.reece.cathayhomework_2024.model.Attraction
 import cc.reece.cathayhomework_2024.utils.getParcelableCompat
@@ -32,6 +37,8 @@ class AttractionFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val attraction get() = requireArguments().getParcelableCompat<Attraction>(KEY_ATTRACTION)!!
+
+    private val viewModel: AttractionViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +74,7 @@ class AttractionFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupViews() {
         binding.toolbar.apply {
             title = attraction.name
@@ -74,27 +82,40 @@ class AttractionFragment : Fragment() {
             setNavigationOnClickListener { handleBackPressed() }
         }
         binding.titleTextView.text = attraction.name
-        binding.addressTextView.text = attraction.address
-        binding.openTimeTextView.text = attraction.openTime
-        binding.telTextView.text = attraction.tel
+        handleMainInfo(binding.addressTextView, binding.locationIcon, attraction.address)
+        handleMainInfo(binding.openTimeTextView, binding.dateIcon, attraction.openTime)
+        handleMainInfo(binding.telTextView, binding.phoneIcon, attraction.tel)
         binding.categoryTimeTextView.text = attraction.category.joinToString(" · ") { it.name }
-        binding.descTextView.text = attraction.introduction.trim()
+        binding.descTextView.text =
+            "${attraction.introduction.trim()}\n\n${attraction.remind.trim()}"
         binding.urlButton.apply {
-            isEnabled = attraction.url.isNotEmpty()
-            setOnClickListener {
+            attraction.url.let { url ->
+                isEnabled = url.isNotEmpty()
+                setOnClickListener { viewModel.openUrl(url) }
             }
         }
         binding.websiteButton.apply {
-            isEnabled = attraction.officialSite.isNotEmpty()
-            setOnClickListener { }
+            attraction.officialSite.let { url ->
+                isEnabled = url.isNotEmpty()
+                setOnClickListener { viewModel.openUrl(url) }
+            }
         }
         binding.facebookButton.apply {
-            isEnabled = attraction.facebook.isNotEmpty()
-            setOnClickListener { }
+            attraction.facebook.let { url ->
+                isEnabled = url.isNotEmpty()
+                setOnClickListener { viewModel.openUrl(url) }
+            }
         }
-        binding.ticketButton.apply {
-            isEnabled = attraction.ticket.isNotEmpty()
-            setOnClickListener { }
+    }
+
+    private fun handleMainInfo(textView: TextView, icon: ImageView, info: String) {
+        info.let {
+            val shouldShow = it.isEmpty().not()
+            textView.apply {
+                isVisible = shouldShow
+                text = it
+            }
+            icon.isVisible = shouldShow
         }
     }
 
