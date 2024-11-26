@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.viewpager2.widget.ViewPager2
 import cc.reece.cathayhomework_2024.databinding.FragmentAttractionBinding
 import cc.reece.cathayhomework_2024.model.Attraction
 import cc.reece.cathayhomework_2024.utils.getParcelableCompat
@@ -37,6 +38,8 @@ class AttractionFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val attraction get() = requireArguments().getParcelableCompat<Attraction>(KEY_ATTRACTION)!!
+
+    private val imageAdapter = ImageAdapter()
 
     private val viewModel: AttractionViewModel by activityViewModels()
 
@@ -81,6 +84,7 @@ class AttractionFragment : Fragment() {
             setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
             setNavigationOnClickListener { handleBackPressed() }
         }
+        setupImagePager()
         binding.titleTextView.text = attraction.name
         handleMainInfo(binding.addressTextView, binding.locationIcon, attraction.address)
         handleMainInfo(binding.openTimeTextView, binding.dateIcon, attraction.openTime)
@@ -106,6 +110,25 @@ class AttractionFragment : Fragment() {
                 setOnClickListener { viewModel.openUrl(url) }
             }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged, SetTextI18n")
+    private fun setupImagePager() {
+        val images = attraction.images.map { it.src }
+        fun updateIndicator(position: Int) {
+            binding.tabIndicatorTextView.text = "${position + 1}/${images.size}"
+        }
+        binding.imagePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                updateIndicator(position)
+            }
+        })
+        binding.imagePager.adapter = imageAdapter.apply {
+            iamges = attraction.images.map { it.src }
+            notifyDataSetChanged()
+        }
+        updateIndicator(0)
     }
 
     private fun handleMainInfo(textView: TextView, icon: ImageView, info: String) {
