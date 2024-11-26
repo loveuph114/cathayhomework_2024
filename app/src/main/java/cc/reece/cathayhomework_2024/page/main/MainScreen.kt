@@ -45,7 +45,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
@@ -236,7 +235,7 @@ private fun MainContent(
             )
 
             is UiState.Success -> SuccessContent(
-                news = uiState.result.news.take(3),
+                news = uiState.result.news,
                 attractions = uiState.result.attractions,
                 loadMoreState = loadMoreState,
                 onAction = onAction
@@ -314,21 +313,15 @@ private fun LazyListScope.newsSection(
             NewsItem(
                 news = news,
                 topRoundedCorner = index == 0,
+                bottomRoundedCorner = index == newsList.size - 1,
                 onClick = onClick
             )
             if (index < newsList.size) {
                 Spacer(modifier = Modifier.height(1.dp))
             }
         }
-        showAllNewsButton()
     } else {
         noNewsItem()
-    }
-}
-
-private fun LazyListScope.showAllNewsButton() {
-    item {
-        ShowAllButton(onClick = { })
     }
 }
 
@@ -397,33 +390,6 @@ private fun LazyListScope.showLoadMoreIfNeed(
 }
 
 @Composable
-private fun ShowAllButton(
-    onClick: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .clip(
-                RoundedCornerShape(
-                    bottomStart = 12.dp,
-                    bottomEnd = 12.dp
-                )
-            )
-            .background(MaterialTheme.colorScheme.surface)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = stringResource(id = R.string.show_all),
-            color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.bodySmall,
-        )
-    }
-}
-
-@Composable
 private fun NoNewsItem() {
     Box(
         modifier = Modifier
@@ -460,22 +426,21 @@ fun Section(
 fun NewsItem(
     news: News,
     topRoundedCorner: Boolean = false,
+    bottomRoundedCorner: Boolean = false,
     onClick: (News) -> Unit
 ) {
-    val shape = when {
-        topRoundedCorner -> RoundedCornerShape(
-            topStart = 12.dp,
-            topEnd = 12.dp
-        )
-
-        else -> RectangleShape
-    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clip(shape)
+            .clip(
+                RoundedCornerShape(
+                    topStart = if (topRoundedCorner) 12.dp else 0.dp,
+                    topEnd = if (topRoundedCorner) 12.dp else 0.dp,
+                    bottomStart = if (bottomRoundedCorner) 12.dp else 0.dp,
+                    bottomEnd = if (bottomRoundedCorner) 12.dp else 0.dp
+                )
+            )
             .background(MaterialTheme.colorScheme.surface)
             .clickable { onClick(news) }
             .padding(horizontal = 16.dp, vertical = 12.dp)

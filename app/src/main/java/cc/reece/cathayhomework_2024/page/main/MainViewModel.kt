@@ -99,7 +99,7 @@ class MainViewModel(
             _loadMoreState.value = UiState.Success(Unit)
             _uiState.value = UiState.Success(
                 MainResult(
-                    news = newsCache,
+                    news = newsCache.take(3),
                     attractions = attractionsCache
                 )
             )
@@ -138,7 +138,7 @@ class MainViewModel(
 
             _uiState.value = UiState.Success(
                 MainResult(
-                    news = newsCache,
+                    news = newsCache.take(3),
                     attractions = attractionsCache
                 )
             )
