@@ -8,10 +8,10 @@
     <color name="light_on_secondary_container">#FF121F0F</color>
     <color name="light_tertiary_container">#FFDCC3</color>
     <color name="light_on_tertiary_container">#FF2B1600</color>
-    <color name="light_surface">#FFFFFFFF</color>
+    <color name="light_surface">#FFF5F5F2</color>
     <color name="light_on_surface">#FF1A1C18</color>
     <color name="light_outline">#FF74796D</color>
-    <color name="light_background">#FFFFFFFF</color>
+    <color name="light_background">#FFF5F5F2</color>
 
     <color name="dark_deep_forest_green">#FF2A5C37</color>
     <color name="dark_olive_green">#FF588D4E</color>

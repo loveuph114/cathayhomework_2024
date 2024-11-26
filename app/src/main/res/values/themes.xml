@@ -19,11 +19,5 @@
         <item name="colorOnSurface">@color/light_on_surface</item>
         <item name="colorOutline">@color/light_outline</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="toolbarStyle">@style/Widget.CathayTheme.Toolbar</item>
     </style>
-
-    <style name="Widget.CathayTheme.Toolbar" parent="Widget.Material3.Toolbar">
-        <item name="android:background">?attr/colorSurface</item>
-    </style>
-
 </resources>
