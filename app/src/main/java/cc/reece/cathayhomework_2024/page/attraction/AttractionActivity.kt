@@ -1,4 +1,4 @@
-package cc.reece.cathayhomework_2024.page.news
+package cc.reece.cathayhomework_2024.page.attraction
 
 import android.content.Context
 import android.content.Intent
@@ -8,28 +8,29 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import cc.reece.cathayhomework_2024.R
 import cc.reece.cathayhomework_2024.databinding.ActivityNewsBinding
-import cc.reece.cathayhomework_2024.page.web.WebViewFragment
+import cc.reece.cathayhomework_2024.model.Attraction
 import cc.reece.cathayhomework_2024.utils.LanguageHelper
 import cc.reece.cathayhomework_2024.utils.getAppPrefs
+import cc.reece.cathayhomework_2024.utils.getParcelableExtraCompat
 
-class NewsActivity : AppCompatActivity() {
+class AttractionActivity : AppCompatActivity() {
 
     companion object {
 
-        private const val EXTRA_URL = "EXTRA_URL"
+        private const val EXTRA_ATTRACTION = "EXTRA_ATTRACTION"
 
         fun createIntent(
             context: Context,
-            url: String,
-        ) = Intent(context, NewsActivity::class.java).apply {
-            putExtra(EXTRA_URL, url)
+            attraction: Attraction,
+        ) = Intent(context, AttractionActivity::class.java).apply {
+            putExtra(EXTRA_ATTRACTION, attraction)
         }
     }
 
     private lateinit var binding: ActivityNewsBinding
 
-    private val url get() = intent.getStringExtra(EXTRA_URL)!!
-
+    private val attraction
+        get() = intent.getParcelableExtraCompat<Attraction>(EXTRA_ATTRACTION)!!
 
     override fun attachBaseContext(newBase: Context) {
         val context =
@@ -39,14 +40,13 @@ class NewsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
-
         super.onCreate(savedInstanceState)
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, WebViewFragment.newInstance(url))
+                .replace(R.id.container, AttractionFragment.newInstance(attraction))
                 .commit()
         }
     }

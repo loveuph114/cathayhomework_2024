@@ -1,42 +1,43 @@
-package cc.reece.cathayhomework_2024.page.web
+package cc.reece.cathayhomework_2024.page.attraction
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebViewClient
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import cc.reece.cathayhomework_2024.R
-import cc.reece.cathayhomework_2024.databinding.FragmentWebviewBinding
+import cc.reece.cathayhomework_2024.databinding.FragmentAttractionBinding
+import cc.reece.cathayhomework_2024.model.Attraction
+import cc.reece.cathayhomework_2024.utils.getParcelableCompat
 
-class WebViewFragment : Fragment() {
+class AttractionFragment : Fragment() {
 
     companion object {
-        private const val KEY_URL = "KEY_URL"
+        private const val KEY_ATTRACTION = "KEY_ATTRACTION"
 
         fun newInstance(
-            url: String
-        ) = WebViewFragment().apply {
+            attraction: Attraction
+        ) = AttractionFragment().apply {
             arguments = bundleOf(
-                KEY_URL to url
+                KEY_ATTRACTION to attraction
             )
         }
     }
 
-    private var _binding: FragmentWebviewBinding? = null
+    private var _binding: FragmentAttractionBinding? = null
     private val binding get() = _binding!!
 
-    private val url get() = requireArguments().getString(KEY_URL)!!
+    private val attraction get() = requireArguments().getParcelableCompat<Attraction>(KEY_ATTRACTION)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentWebviewBinding.inflate(inflater, container, false)
+        _binding = FragmentAttractionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -54,14 +55,12 @@ class WebViewFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupViews() {
         binding.toolbar.apply {
+            setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
             title = getString(R.string.news_title)
             setNavigationOnClickListener { handleBackPressed() }
         }
 
-        binding.webView.apply {
-            settings.javaScriptEnabled = true
-            webViewClient = WebViewClient()
-        }.loadUrl(url)
+
     }
 
     private fun setupBack() {

@@ -1,7 +1,10 @@
 package cc.reece.cathayhomework_2024.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Attraction(
     val id: Int,
     val name: String,
@@ -26,15 +29,17 @@ data class Attraction(
     val service: List<IdName>,
     val friendly: List<IdName>,
     val images: List<Image>,
-)
+) : Parcelable
 
+@Parcelize
 data class IdName(
     val id: Int,
     val name: String
-)
+) : Parcelable
 
+@Parcelize
 data class Image(
     val src: String,
     val subject: String,
     val ext: String
-)
+) : Parcelable

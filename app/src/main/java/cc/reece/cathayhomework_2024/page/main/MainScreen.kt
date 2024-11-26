@@ -83,6 +83,7 @@ sealed interface MainScreenUiAction {
     data object ToggleLanguageSheet : MainScreenUiAction
     data class SelectLanguage(val language: Language) : MainScreenUiAction
     data class NewsClick(val news: News) : MainScreenUiAction
+    data class AttractionClick(val attraction: Attraction) : MainScreenUiAction
 }
 
 private class MainViewModelFactory(
@@ -292,7 +293,8 @@ private fun SuccessContent(
         spacerItem(32.dp)
         attractionsSection(
             attractions = attractions,
-            onLoadMore = { onAction(MainScreenUiAction.LoadMore) }
+            onLoadMore = { onAction(MainScreenUiAction.LoadMore) },
+            onAttractionClick = { onAction(MainScreenUiAction.AttractionClick(it)) }
         )
         showLoadMoreIfNeed(loadMoreState)
     }
@@ -341,16 +343,15 @@ private fun LazyListScope.spacerItem(height: Dp) {
 private fun LazyListScope.attractionsSection(
     attractions: List<Attraction>,
     onLoadMore: () -> Unit,
+    onAttractionClick: (Attraction) -> Unit
 ) {
     stickyHeader {
         Section(stringResource(id = R.string.attractions_title))
     }
     itemsIndexed(attractions) { index, item ->
         AttractionItem(
-            name = item.name,
-            address = item.address,
-            category = item.category.joinToString(" · ") { it.name },
-            image = item.images.firstOrNull()?.src
+            attraction = item,
+            onAttractionClick = onAttractionClick
         )
         LaunchedEffect(attractions.size) {
             if (attractions.size - index < 2) {
@@ -459,17 +460,20 @@ fun NewsItem(
 
 @Composable
 fun AttractionItem(
-    name: String,
-    address: String,
-    category: String,
-    image: String?
+    attraction: Attraction,
+    onAttractionClick: (Attraction) -> Unit
 ) {
+    val name = attraction.name
+    val address = attraction.address
+    val category = attraction.category.joinToString(" · ") { it.name }
+    val image = attraction.images.firstOrNull()?.src
+
     Box(
         modifier = Modifier
             .aspectRatio(3f / 2f)
             .padding(start = 16.dp, end = 16.dp, bottom = 12.dp)
             .clip(RoundedCornerShape(12.dp))
-            .clickable { }
+            .clickable { onAttractionClick(attraction) }
             .background(MaterialTheme.colorScheme.tertiary),
         contentAlignment = Alignment.BottomCenter
     ) {
