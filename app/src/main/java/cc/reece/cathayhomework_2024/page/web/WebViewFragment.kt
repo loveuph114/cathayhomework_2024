@@ -1,18 +1,13 @@
 package cc.reece.cathayhomework_2024.page.web
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.activity.addCallback
-import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import cc.reece.cathayhomework_2024.R
 import cc.reece.cathayhomework_2024.databinding.FragmentWebviewBinding
@@ -46,9 +41,7 @@ class WebViewFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
-        setupWindow()
         setupViews()
         setupBack()
     }
@@ -81,26 +74,6 @@ class WebViewFragment : Fragment() {
             parentFragmentManager.popBackStack()
         } else {
             requireActivity().finish()
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun setupWindow() {
-        requireActivity().window.isNavigationBarContrastEnforced = false
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemWindowInsets = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
-            )
-            binding.appBarLayout.updatePadding(
-                top = systemWindowInsets.top
-            )
-            binding.root.updatePadding(
-                left = systemWindowInsets.left,
-                bottom = systemWindowInsets.bottom,
-                right = systemWindowInsets.right
-            )
-
-            WindowInsetsCompat.CONSUMED
         }
     }
 }

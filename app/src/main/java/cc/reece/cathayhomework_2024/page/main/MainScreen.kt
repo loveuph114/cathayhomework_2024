@@ -72,6 +72,8 @@ import cc.reece.cathayhomework_2024.ui.components.CathayScaffold
 import cc.reece.cathayhomework_2024.ui.components.CathayTopAppBar
 import cc.reece.cathayhomework_2024.ui.components.LanguageSelectorBottomSheet
 import cc.reece.cathayhomework_2024.ui.theme.CathayTheme
+import cc.reece.cathayhomework_2024.utils.AppPrefs
+import cc.reece.cathayhomework_2024.utils.getAppPrefs
 import cc.reece.cathayhomework_2024.utils.withAlpha
 import coil.compose.AsyncImage
 import java.util.Locale
@@ -85,11 +87,12 @@ sealed interface MainScreenUiAction {
 }
 
 private class MainViewModelFactory(
-    private val repository: TravelTaipeiRepository
+    private val repository: TravelTaipeiRepository,
+    private val appPrefs: AppPrefs
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return MainViewModel(repository) as T
+        return MainViewModel(repository, appPrefs) as T
     }
 }
 
@@ -98,7 +101,8 @@ private class MainViewModelFactory(
 fun MainScreen(
     viewModel: MainViewModel = viewModel(
         factory = MainViewModelFactory(
-            TravelTaipeiRepository(RetrofitClient.travelTaipeiApiService)
+            TravelTaipeiRepository(RetrofitClient.travelTaipeiApiService),
+            LocalContext.current.getAppPrefs()
         )
     ),
     onAction: (MainScreenUiAction) -> Unit

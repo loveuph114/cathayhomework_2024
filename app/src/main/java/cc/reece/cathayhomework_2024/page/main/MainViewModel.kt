@@ -3,7 +3,6 @@ package cc.reece.cathayhomework_2024.page.main
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cc.reece.cathayhomework_2024.network.TravelTaipeiRepository
 import cc.reece.cathayhomework_2024.model.Attraction
 import cc.reece.cathayhomework_2024.model.MainResult
 import cc.reece.cathayhomework_2024.model.News
@@ -11,6 +10,9 @@ import cc.reece.cathayhomework_2024.model.RequestResult
 import cc.reece.cathayhomework_2024.model.UiState
 import cc.reece.cathayhomework_2024.model.lang.Language
 import cc.reece.cathayhomework_2024.model.lang.supportedLanguages
+import cc.reece.cathayhomework_2024.network.TravelTaipeiRepository
+import cc.reece.cathayhomework_2024.utils.AppPrefs
+import cc.reece.cathayhomework_2024.utils.LanguageHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -21,7 +23,8 @@ import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class MainViewModel(
-    private val travelTaipeiRepository: TravelTaipeiRepository
+    private val travelTaipeiRepository: TravelTaipeiRepository,
+    private val appPrefs: AppPrefs
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<MainResult>>(UiState.Loading)
@@ -49,11 +52,10 @@ class MainViewModel(
     }
 
     fun updateLanguage(language: Language) {
-        languageCode = language.code
-        _currentLocale.value = when (val code = language.code) {
-            "zh-tw" -> Locale.TRADITIONAL_CHINESE
-            "zh-cn" -> Locale.SIMPLIFIED_CHINESE
-            else -> Locale.forLanguageTag(code)
+        language.code.apply {
+            languageCode = this
+            appPrefs.languageCode = this
+            _currentLocale.value = LanguageHelper.getLocale(this)
         }
     }
 
