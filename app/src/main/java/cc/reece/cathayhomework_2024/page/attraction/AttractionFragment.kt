@@ -39,7 +39,7 @@ class AttractionFragment : Fragment() {
 
     private val attraction get() = requireArguments().getParcelableCompat<Attraction>(KEY_ATTRACTION)!!
 
-    private val imageAdapter = ImageAdapter()
+    private val imageAdapter = ImageCarouselAdapter()
 
     private val viewModel: AttractionViewModel by activityViewModels()
 

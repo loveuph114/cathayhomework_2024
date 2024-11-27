@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
-class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+class ImageCarouselAdapter : RecyclerView.Adapter<ImageCarouselAdapter.ImageViewHolder>() {
 
     var iamges = listOf<String>()
 

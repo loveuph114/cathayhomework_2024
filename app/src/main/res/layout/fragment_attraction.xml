@@ -85,7 +85,8 @@
                 android:layout_marginStart="16dp"
                 android:src="@drawable/ic_location"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/addressTextView" />
+                app:layout_constraintTop_toTopOf="@+id/addressTextView"
+                app:tint="?android:textColorPrimary" />
 
             <TextView
                 android:id="@+id/addressTextView"
@@ -108,7 +109,8 @@
                 android:layout_marginStart="16dp"
                 android:src="@drawable/ic_date"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/openTimeTextView" />
+                app:layout_constraintTop_toTopOf="@+id/openTimeTextView"
+                app:tint="?android:textColorPrimary" />
 
             <TextView
                 android:id="@+id/openTimeTextView"
@@ -132,7 +134,8 @@
                 android:layout_marginStart="16dp"
                 android:src="@drawable/ic_phone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tel_text_view" />
+                app:layout_constraintTop_toTopOf="@+id/tel_text_view"
+                app:tint="?android:textColorPrimary" />
 
             <TextView
                 android:id="@+id/tel_text_view"
