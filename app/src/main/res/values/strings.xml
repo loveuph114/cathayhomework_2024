@@ -5,4 +5,7 @@
     <string name="attractions_title">景點</string>
     <string name="show_all">顯示全部</string>
     <string name="choose_language">選擇語言</string>
+    <string name="url">網址</string>
+    <string name="website">官網</string>
+    <string name="facebook">臉書</string>
 </resources>

@@ -5,4 +5,7 @@
     <string name="attractions_title">สถานที่ท่องเที่ยว</string>
     <string name="show_all">แสดงทั้งหมด</string>
     <string name="choose_language">เลือกภาษา</string>
+    <string name="url">URL</string>
+    <string name="website">เว็บไซต์ทางการ</string>
+    <string name="facebook">เฟซบุ๊ก</string>
 </resources>

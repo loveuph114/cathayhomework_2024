@@ -5,4 +5,7 @@
     <string name="attractions_title">관광지</string>
     <string name="show_all">모두 보기</string>
     <string name="choose_language">언어 선택</string>
+    <string name="url">URL</string>
+    <string name="website">공식 웹사이트</string>
+    <string name="facebook">페이스북</string>
 </resources>

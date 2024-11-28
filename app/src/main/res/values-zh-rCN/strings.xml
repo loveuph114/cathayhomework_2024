@@ -5,4 +5,7 @@
     <string name="attractions_title">景点</string>
     <string name="show_all">显示全部</string>
     <string name="choose_language">选择语言</string>
+    <string name="url">网址</string>
+    <string name="website">官网</string>
+    <string name="facebook">脸书</string>
 </resources>

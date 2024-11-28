@@ -5,4 +5,7 @@
     <string name="attractions_title">Attractions</string>
     <string name="show_all">Show all</string>
     <string name="choose_language">Choose Language</string>
+    <string name="url">URL</string>
+    <string name="website">Official Website</string>
+    <string name="facebook">Facebook</string>
 </resources>

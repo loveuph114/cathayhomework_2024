@@ -5,4 +5,7 @@
     <string name="attractions_title">観光スポット</string>
     <string name="show_all">すべて表示</string>
     <string name="choose_language">言語を選択</string>
+    <string name="url">URL</string>
+    <string name="website">公式サイト</string>
+    <string name="facebook">フェイスブック</string>
 </resources>

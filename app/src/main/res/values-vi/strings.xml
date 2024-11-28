@@ -5,4 +5,7 @@
     <string name="attractions_title">Điểm du lịch</string>
     <string name="show_all">Xem tất cả</string>
     <string name="choose_language">Chọn ngôn ngữ</string>
+    <string name="url">URL</string>
+    <string name="website">Trang web chính thức</string>
+    <string name="facebook">Facebook</string>
 </resources>

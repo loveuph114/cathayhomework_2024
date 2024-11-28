@@ -5,4 +5,7 @@
     <string name="attractions_title">Tempat Wisata</string>
     <string name="show_all">Tampilkan semua</string>
     <string name="choose_language">Pilih Bahasa</string>
+    <string name="url">URL</string>
+    <string name="website">Situs web resmi</string>
+    <string name="facebook">Facebook</string>
 </resources>
